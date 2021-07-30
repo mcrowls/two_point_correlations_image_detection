@@ -758,7 +758,7 @@ def lineal_path_func(points, ellipses, plotting=False):
                 num += 1
                 break
     # check if all of the points are in the same phase
-    if num == size:
+    if num >= size:
         truth = True
     # if we want to plot the results, then plotting is True
     if plotting:
