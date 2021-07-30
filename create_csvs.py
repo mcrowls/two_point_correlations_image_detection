@@ -7,7 +7,7 @@ from scipy import ndimage
 import pandas as pd
 
 
-def find_ellipses_in_image(image, folder_1, folder_2):
+def find_ellipses_in_image(image, path_1, path_2):
     '''
     From the artificially generated image, we are able to access the locations and
     orientations of the ellipses. These are all added to a csv file which is saved
@@ -63,6 +63,6 @@ def find_ellipses_in_image(image, folder_1, folder_2):
     avg_orientations = np.mean(orientations_black)
 
 
-    locations1.to_csv(folder_1 '.csv')
-    locations2.to_csv(folder_2 + '.csv')
+    locations1.to_csv(path_1 '.csv')
+    locations2.to_csv(path_2 + '.csv')
 return
