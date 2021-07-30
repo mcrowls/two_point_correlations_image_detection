@@ -697,8 +697,8 @@ def two_point_cluster(point_1, point_2, ellipses, grouped_ellipses, plotting=Fal
         b = ellipse[3]
         theta = -ellipse[4]*(math.pi/180)
         # Find whether the point is in the ellipse, and if it is check the group
-        if point_in_ellipse(point_1[1], point_1[0], x0, y0, a, b, theta):
-            if point_in_ellipse(point_2[1], point_2[0], x0, y0, a, b, theta):
+        if point_in_ellipse(point_1[1], point_1[0], x0, y0, b, a, theta):
+            if point_in_ellipse(point_2[1], point_2[0], x0, y0, b, a, theta):
                 truth = True
             elif np.size(group) != 0:
                 for index in group:
@@ -707,7 +707,7 @@ def two_point_cluster(point_1, point_2, ellipses, grouped_ellipses, plotting=Fal
                     a = ellipses[index][2]
                     b = ellipses[index][3]
                     theta = -ellipses[index][4]*(math.pi/180)
-                    if point_in_ellipse(point_2[1], point_2[0], x0, y0, a, b, theta):
+                    if point_in_ellipse(point_2[1], point_2[0], x0, y0, b, a, theta):
                         truth = True
     # If we want to plot the results, then we can either plot them red or green
     if plotting:
@@ -754,11 +754,11 @@ def lineal_path_func(points, ellipses, plotting=False):
             a = ellipse[2]
             b = ellipse[3]
             theta = -ellipse[4]*(math.pi/180)
-            if point_in_ellipse(point[1], point[0], x0, y0, a, b, theta):
+            if point_in_ellipse(point[1], point[0], x0, y0, b, a, theta):
                 num += 1
                 break
     # check if all of the points are in the same phase
-    if num >= size:
+    if num == size:
         truth = True
     # if we want to plot the results, then plotting is True
     if plotting:
@@ -957,7 +957,7 @@ def varying_r(image, stat, phase, num, min_r, max_r, plotting=False):
 Below is an example of how to use the code to calculate the two-point statistics
 '''
 # load in the image
-# image = io.imread("Images/Manual_Microstructures_Gray_3/image0.png", as_gray=True)
+image = io.imread("Images_From_Papers/actual_microstructure_4.jpg", as_gray=True)
 # calculate the statistic
 # probability = two_point_stats(image, two_point_cluster, 100, 'fibers', plotting=True)
 # plt.show()
@@ -965,5 +965,9 @@ Below is an example of how to use the code to calculate the two-point statistics
 
 
 # do the same here for the lineal path function
-# probability = two_point_stats(image, lineal_path_func, 100, 'fibers', plotting=True, num_ellipses=300, n=50, image_type='generated')
-# plt.show()
+l_probability = two_point_stats(image, lineal_path_func, 100, 'fibers', plotting=True, num_ellipses=100, n=100, image_type='real')
+c_probability = two_point_stats(image, two_point_cluster, 100, 'fibers', plotting=True, num_ellipses=100, n=100, image_type='real')
+
+print("l_probability =", l_probability)
+print("c_probability =", c_probability)
+plt.show()
